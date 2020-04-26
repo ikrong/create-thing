@@ -5,6 +5,7 @@ import { FileProvider } from './fs'
 import { ProjectInfo } from '../interfaces/project'
 import path from 'path'
 import chalk from 'chalk'
+import { PackageProvider } from './package'
 
 @Provider()
 export class ProjectProvider {
@@ -14,6 +15,7 @@ export class ProjectProvider {
         private client: ClientProvider,
         private fs: FileProvider,
         private ask: AskProvider,
+        private pkg: PackageProvider,
     ) { }
 
     tmpdir: string = path.join(__dirname, '../../tmp/')
@@ -43,22 +45,49 @@ export class ProjectProvider {
     async start() {
         let loading = this.ask.loading()
         this.projects = await this.getConfig()
-        if (this.projects.length <= 6) {
-            loading.stop()
-            let choice = await this.ask.choose('选择项目模板:', this.projects.map(item => {
-                return {
-                    name: item.name,
-                    desc: item.lang.zh,
-                    extras: item
-                }
-            }))
-            loading.start('获取项目中')
-            let dir = await this.download(choice.extras)
-            loading.stop()
-            let isCWD = await this.ask.confirm(`需要将项目创建在当前目录下吗 ${chalk.green(process.cwd())}`)
-            console.log(dir, isCWD)
-            loading.stop()
+        try {
+            if (this.projects.length <= 6) {
+                loading.stop()
+                let choice = await this.ask.choose('选择项目模板:', this.projects.map(item => {
+                    return {
+                        name: item.name,
+                        desc: item.lang.zh,
+                        extras: item
+                    }
+                }))
+                loading.start('获取项目中')
+                let dir = await this.download(choice.extras)
+                loading.stop()
 
+                // 用户确认工作目录
+                let workdir = process.cwd()
+                let isCWD = await this.ask.confirm(`需要将项目创建在当前目录下吗 ${chalk.green(workdir)}`)
+                if (isCWD) {
+                    workdir = await this.ask.input('请输入您需要创建项目的路径(绝对路径)', dir => path.isAbsolute(dir))
+                }
+
+                workdir = './stmp'
+
+                // 将模板复制到工作目录中
+                loading.start('复制文件中')
+                await this.fs.mkdir(workdir)
+                await this.fs.copy([
+                    path.join(dir, `/**/*`),
+                    path.join(dir, `/**/.*`),
+                    path.join(dir, `/**.*/*`),
+                    path.join(dir, `/**.*/.*`),
+                ], workdir)
+                loading.stop()
+
+                // 提示修改package.json
+                console.log(`${chalk.green('接下来配置一下package.json')}`)
+                await this.pkg.modify(path.join(workdir, 'package.json'))
+
+                loading.stop()
+            }
+        } catch (error) {
+            loading.stop()
+            console.log(error)
         }
     }
 

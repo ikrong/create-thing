@@ -3,7 +3,7 @@
         "baseUrl": ".",
         "module": "commonjs",
         "moduleResolution": "node",
-        "declaration": true,
+        "declaration": false,
         "noImplicitAny": false,
         "noUnusedLocals": false,
         "removeComments": false,

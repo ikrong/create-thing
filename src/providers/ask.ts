@@ -46,6 +46,17 @@ export class AskProvider {
         })).isYes ? true : false
     }
 
+    async input(desc: string, validator?: (data: string) => (boolean | Promise<boolean>)) {
+        return (await inquirer.prompt({
+            type: 'input',
+            name: 'input',
+            message: desc,
+            validate: (data) => {
+                return validator ? validator(data) : true
+            }
+        })).input
+    }
+
     /**加载动画 */
     loading() {
         let loading = ora()

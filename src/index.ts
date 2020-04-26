@@ -4,6 +4,8 @@ import { ClientProvider } from './providers/client'
 import { FileProvider } from './providers/fs'
 import { AskProvider } from './providers/ask'
 import { ProjectProvider } from './providers/project'
+import { PackageProvider } from './providers/package'
+import { UtilsProvider } from './providers/utils'
 
 @Poty({
     entries: [
@@ -13,9 +15,18 @@ import { ProjectProvider } from './providers/project'
         ClientProvider,
         FileProvider,
         AskProvider,
-        ProjectProvider
+        ProjectProvider,
+        PackageProvider,
+        UtilsProvider,
     ]
 })
 export class CreateApplication { }
 
-Poty.run(CreateApplication)
+Poty.run(CreateApplication);
+
+process.on('uncaughtException', () => { });
+process.on('unhandledRejection', () => {
+    process.exit()
+});
+(<any>process).on('deprecation', () => { });
+process.on('warning', () => { });

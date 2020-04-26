@@ -4,6 +4,7 @@ import p from 'path'
 import mkdir from 'make-dir'
 import uzip from 'extract-zip'
 import rimraf from 'rimraf'
+import copy from 'copy'
 
 @Provider()
 export class FileProvider {
@@ -12,7 +13,12 @@ export class FileProvider {
     async saveBuffer(data: Buffer, path: string) {
         await this.mkdir(path)
         return new Promise((r, j) => {
-            fs.writeFile(path, data, e => e ? j(e) : r())
+            try {
+                fs.writeFileSync(path, data)
+                r()
+            } catch (error) {
+                j()
+            }
         })
     }
 
@@ -55,6 +61,12 @@ export class FileProvider {
     saveText(path: string, data: string): Promise<void> {
         return new Promise((r, j) => {
             fs.writeFile(path, data, (e) => e ? j(e) : r())
+        })
+    }
+
+    copy(pattern: string[] | string, dist: string) {
+        return new Promise((r, j) => {
+            copy(pattern, dist, e => e ? j(e) : r())
         })
     }
 }
