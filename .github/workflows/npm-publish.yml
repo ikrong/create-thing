@@ -14,5 +14,17 @@ jobs:
           node-version: 10
       - run: yarn install && yarn build
       - run: ls
+      - run: npm config set commit-hooks false
+      - run: npm config set git-tag-version false
+      - run: npm version patch
+      - uses: JS-DevTools/npm-publish@v1
+        with:
+          token: ${{secrets.NPM_TOKEN}}
+      - uses: matheusalbino/git-commit@v1.0.1
+        with:
+          user-name: workflows
+          user-email: workflows@github-actions.com
+          message: workflows npm publish
+          github-token: ${{secrets.G_Token}}
         env:
           production: false
