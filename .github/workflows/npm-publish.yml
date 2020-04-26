@@ -1,8 +1,7 @@
 name: NPM-Publish
 
 on:
-  release:
-    types: [created]
+  master
 
 jobs:
   install:
@@ -12,9 +11,7 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 10
-      - uses: CultureHQ/actions-yarn@master
-        with:
-          args: install --production=true
+      - run: yarn install --production=false
       - run: npm config set commit-hooks false
       - run: npm config set git-tag-version false
   
