@@ -4,7 +4,7 @@ import json from '@rollup/plugin-json'
 import resolve from '@rollup/plugin-node-resolve'
 import rm from 'rimraf'
 
-rm.sync(`dist`)
+rm.sync(`./dist`)
 
 export default {
     input: `src/index.ts`,

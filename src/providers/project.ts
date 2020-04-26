@@ -62,11 +62,9 @@ export class ProjectProvider {
                 // 用户确认工作目录
                 let workdir = process.cwd()
                 let isCWD = await this.ask.confirm(`需要将项目创建在当前目录下吗 ${chalk.green(workdir)}`)
-                if (isCWD) {
+                if (!isCWD) {
                     workdir = await this.ask.input('请输入您需要创建项目的路径(绝对路径)', dir => path.isAbsolute(dir))
                 }
-
-                workdir = './stmp'
 
                 // 将模板复制到工作目录中
                 loading.start('复制文件中')
