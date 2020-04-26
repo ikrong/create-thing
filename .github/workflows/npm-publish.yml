@@ -1,7 +1,8 @@
 name: NPM-Publish
 
-on:
-  master
+on: 
+  push:
+    branches: [ master ]
 
 jobs:
   install:
