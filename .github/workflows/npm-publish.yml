@@ -17,6 +17,15 @@ jobs:
         with:
           args: install
       - run: npm build
+      - run: npm config set commit-hooks false
+      - run: npm config set git-tag-version false
+      - run: npm version patch
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_Token}}
+      - uses: matheusalbino/git-commit@v1.0.1
+        with:
+          user-name: workflows
+          user-email: workflows@github-actions.com
+          message: workflows npm publish
+          github-token: ${{secrets.G_Token}}
