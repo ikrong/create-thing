@@ -12,11 +12,7 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 10
-      - uses: CultureHQ/actions-yarn@master
-        with:
-          args: install
-      - run: npm config set commit-hooks false
-      - run: npm config set git-tag-version false
+      - run: yarn install && yarn build
         env:
           production: false
   
