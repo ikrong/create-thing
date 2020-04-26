@@ -24,38 +24,8 @@ jobs:
     needs: install
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 10
       - run: ls
       - run: ls node_modules
       - uses: CultureHQ/actions-yarn@master
         with:
           args: build
-      - run: npm version patch
-
-  publish:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 10
-          registry-url: https://registry.npmjs.org/
-      - run: ls
-      - run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_Token}}
-
-  commit:
-    needs: publish
-    runs-on: ubuntu-latest
-    steps:
-      - uses: matheusalbino/git-commit@v1.0.1
-        with:
-          user-name: workflows
-          user-email: workflows@github-actions.com
-          message: workflows npm publish
-          github-token: ${{secrets.G_Token}}
