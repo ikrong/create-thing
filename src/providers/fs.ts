@@ -4,7 +4,8 @@ import p from 'path'
 import mkdir from 'make-dir'
 import uzip from 'extract-zip'
 import rimraf from 'rimraf'
-import copy from 'copy'
+import globby from 'globby'
+import cp from 'cp-file'
 
 @Provider()
 export class FileProvider {
@@ -64,9 +65,19 @@ export class FileProvider {
         })
     }
 
-    copy(pattern: string[] | string, dist: string) {
-        return new Promise((r, j) => {
-            copy(pattern, dist, e => e ? j(e) : r())
+    copy(pattern: string[], dist: string, cwd: string = process.cwd()) {
+        return new Promise(async (r, j) => {
+            try {
+                pattern = pattern.map(a => a.replace(/\\/g, '/'))
+                let files = await globby(pattern)
+                for (let i = 0; i < files.length; i++) {
+                    let dir = p.join(dist, p.relative(cwd, files[i]))
+                    await cp(files[i], dir)
+                }
+                r()
+            } catch (error) {
+                j(error)
+            }
         })
     }
 }
