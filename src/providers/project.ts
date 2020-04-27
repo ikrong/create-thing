@@ -18,7 +18,7 @@ export class ProjectProvider {
         private pkg: PackageProvider,
     ) { }
 
-    tmpdir: string = path.join(__dirname, '../../tmp/')
+    tmpdir: string = path.join(__dirname, './tmp/')
 
     async getConfig(): Promise<ProjectInfo[]> {
         // https://raw.staticdn.net/ikrong/starter/master/src/projects.json
@@ -72,9 +72,9 @@ export class ProjectProvider {
                 await this.fs.copy([
                     path.join(dir, `/**/*`),
                     path.join(dir, `/**/.*`),
-                    path.join(dir, `/**.*/*`),
-                    path.join(dir, `/**.*/.*`),
-                ], workdir)
+                    path.join(dir, `/**/.*/*`),
+                    path.join(dir, `/**/.*/.*`),
+                ], workdir, dir)
                 loading.stop()
 
                 // 提示修改package.json

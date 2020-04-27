@@ -2,6 +2,7 @@ import typescript from 'rollup-plugin-typescript2'
 import commonjs from '@rollup/plugin-commonjs'
 import json from '@rollup/plugin-json'
 import resolve from '@rollup/plugin-node-resolve'
+import { terser } from 'rollup-plugin-terser'
 import rm from 'rimraf'
 
 rm.sync(`./dist`)
@@ -13,6 +14,9 @@ export default {
             file: `dist/index.js`,
             name: `create-thing`,
             format: 'cjs',
+            plugins: [
+                terser()
+            ]
         }
     ],
     plugins: [
@@ -30,7 +34,5 @@ export default {
         }),
     ],
     external: [
-        'meow',
-        'copy'
     ],
 } 
