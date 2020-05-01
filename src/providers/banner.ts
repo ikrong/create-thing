@@ -23,15 +23,15 @@ export class BannerProvider {
             ),
             this.fill(' '),
             this.fill(' '),
-            this.center(`Welcome to share your favorite template here`, '*'),
-            this.center(`${chalk.blueBright('https://github.com/ikrong/create-thing')}`, '*'),
+            this.center(`Welcome to share your favorite template here`, '☞☜'),
+            this.center(`${chalk.blueBright('https://github.com/ikrong/create-thing')}`, '♥'),
             this.fill(' '),
             this.fill(' '),
             this.center(`Author ${chalk.greenBright('ikrong.com')}`, '*'),
             this.fill(' '),
             this.fill('='),
         ]
-        console.log(banner.join('\n'))
+        console.log(`\n${banner.join('\n')}\n`)
     }
 
     colorfull(text: string, fns: Function[]) {
@@ -41,7 +41,9 @@ export class BannerProvider {
     center(text: string, border: string = '') {
         let max = process.stdout.columns
         let textLen = this.width(text)
-        let borderLen = this.width(border)
+        let borderLen = border ? 1 : 0
+        let leftB = border[0]
+        let rightB = border[1] || leftB
         let fill = max - (textLen + borderLen * 4)
         if (fill <= 0) {
             let line = Math.ceil(textLen / (max - (2 + (borderLen * 4))))
@@ -52,7 +54,7 @@ export class BannerProvider {
         }
         let left = Math.floor(fill / 2)
         let right = fill - left
-        return String(' ').repeat(left) + `${border} ${text} ${border}` + String(' ').repeat(right)
+        return String(' ').repeat(left) + `${leftB} ${text} ${rightB}` + String(' ').repeat(right)
     }
 
     width(str: string) {

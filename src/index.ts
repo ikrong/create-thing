@@ -8,6 +8,7 @@ import { PackageProvider } from './providers/package'
 import { UtilsProvider } from './providers/utils'
 import { ShareProvider } from './providers/share'
 import { BannerProvider } from './providers/banner'
+import { CMDModule } from '@poty/commander'
 
 @Poty({
     entries: [
@@ -22,6 +23,11 @@ import { BannerProvider } from './providers/banner'
         UtilsProvider,
         ShareProvider,
         BannerProvider,
+    ],
+    imports: [
+        CMDModule.Config({
+            version: require('./../package.json').version,
+        })
     ]
 })
 export class CreateApplication {
