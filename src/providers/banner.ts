@@ -6,19 +6,6 @@ import wrap from 'wrap-ansi'
 @Provider()
 export class BannerProvider {
 
-    test() {
-        console.log(wrap(this.colorfull('Help you start with an empty template project', [
-            chalk.redBright,
-            chalk.yellowBright,
-            chalk.greenBright,
-            chalk.cyanBright,
-            chalk.blackBright,
-            chalk.magentaBright,
-        ]), 5, {
-            hard: true
-        }))
-    }
-
     print() {
         let banner = [
             this.fill('='),
@@ -77,5 +64,3 @@ export class BannerProvider {
     }
 
 }
-
-// new BannerProvider().test()
