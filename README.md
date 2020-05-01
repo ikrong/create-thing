@@ -21,6 +21,8 @@ yarn create thing
 
 # 项目编辑
 
+空项目目录放在项目 [https://github.com/ikrong/starter](https://github.com/ikrong/starter)
+
 在此编辑项目文件并且放入目录 /src/projects.json
 
 [https://ikrong.github.io/starter](https://ikrong.github.io/starter)
