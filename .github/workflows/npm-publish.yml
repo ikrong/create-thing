@@ -28,3 +28,4 @@ jobs:
           github-token: ${{secrets.G_Token}}
         env:
           production: false
+          NODE_ENV: production
