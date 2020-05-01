@@ -1,5 +1,6 @@
 import { CMD, Subcmd } from '@poty/commander'
 import { ProjectProvider } from '../providers/project'
+import chalk from 'chalk'
 
 @CMD()
 export class DefaultCMD {
@@ -10,7 +11,11 @@ export class DefaultCMD {
 
     @Subcmd()
     async default() {
-        this.project.start()
+        if (parseInt(process.versions.node.split('.')[0]) >= 10) {
+            this.project.start()
+        }else{
+            console.log(chalk.redBright('需要node版本号10.X以上'))
+        }
     }
 
 }
