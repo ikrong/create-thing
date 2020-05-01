@@ -5,7 +5,10 @@ import { FileProvider } from './fs'
 import { ProjectInfo } from '../interfaces/project'
 import path from 'path'
 import chalk from 'chalk'
+import url from 'url'
+import osLocale from 'os-locale'
 import { PackageProvider } from './package'
+import { ShareProvider } from './share'
 
 @Provider()
 export class ProjectProvider {
@@ -16,6 +19,7 @@ export class ProjectProvider {
         private fs: FileProvider,
         private ask: AskProvider,
         private pkg: PackageProvider,
+        private share: ShareProvider,
     ) { }
 
     tmpdir: string = path.join(__dirname, './tmp/')
@@ -24,7 +28,16 @@ export class ProjectProvider {
         // https://raw.staticdn.net/ikrong/starter/master/src/projects.json
         // https://raw.githubusercontent.com/ikrong/starter/master/src/projects.json
         // https://cdn.jsdelivr.net/gh/ikrong/starter@master/src/projects.json
-        return this.client.get(`https://ikrong.github.io/starter/projects.json`)
+        let configUrl = ''
+        if (this.share.repository) {
+            if (this.share.repository.slice(-5) == '.json') configUrl = this.share.repository
+            else {
+                if (this.share.repository.slice(-1) != '/') this.share.repository += '/'
+                let projectUrl = url.resolve(this.share.repository, './projects.json')
+                configUrl = this.share.repository ? `${projectUrl.toString()}` : ''
+            }
+        }
+        return this.client.get(configUrl || `https://ikrong.github.io/starter/projects.json`)
     }
 
     async download(proj: ProjectInfo): Promise<string> {
@@ -34,7 +47,11 @@ export class ProjectProvider {
         let mainUrl = `https://github.com/ikrong/starter/archive/master.zip`
         let url = String(proj.type).toLowerCase() == 'github' ? proj.url : mainUrl
         await this.client.download(url, file)
-        await this.fs.unzip(file, unzipdir)
+        try {
+            await this.fs.unzip(file, unzipdir)
+        } catch (error) {
+            throw console.log(chalk.redBright('不是压缩文件或者解压出错'))
+        }
         let dirs = await this.fs.dir(unzipdir)
         let projectDir = ''
         switch (String(proj.type).toLowerCase()) {
@@ -57,10 +74,16 @@ export class ProjectProvider {
         try {
             if (this.projects.length <= 6) {
                 loading.stop()
-                let choice = await this.ask.choose('选择项目模板:', this.projects.map(item => {
+                let locale = await osLocale()
+                let isZh = locale.match(/^zh-/) ? true : false
+                let choice = await this.ask.choose('选择项目模板:', this.projects.filter(item => {
+                    if (this.share.repository) {
+                        return String(item.type).toLowerCase() == 'github'
+                    } else return true
+                }).map(item => {
                     return {
                         name: item.name,
-                        desc: item.lang.zh,
+                        desc: isZh ? item.lang.zh : item.lang.en,
                         extras: item
                     }
                 }))

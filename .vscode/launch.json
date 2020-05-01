@@ -9,7 +9,8 @@
             "type": "node",
             "request": "launch",
             "args": [
-                "${workspaceRoot}/src/index.ts" // 入口文件
+                "${workspaceRoot}/src/index.ts", // 入口文件
+                "gen-config"
             ],
             "runtimeArgs": [
                 "--nolazy",

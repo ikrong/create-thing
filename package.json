@@ -22,8 +22,8 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@poty/commander": "0.2.16",
-    "@poty/core": "0.2.16",
+    "@poty/commander": "0.2.18",
+    "@poty/core": "0.2.18",
     "@rollup/plugin-commonjs": "^11.1.0",
     "@rollup/plugin-json": "^4.0.3",
     "@rollup/plugin-node-resolve": "^7.1.3",

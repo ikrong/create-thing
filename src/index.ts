@@ -6,6 +6,7 @@ import { AskProvider } from './providers/ask'
 import { ProjectProvider } from './providers/project'
 import { PackageProvider } from './providers/package'
 import { UtilsProvider } from './providers/utils'
+import { ShareProvider } from './providers/share'
 
 @Poty({
     entries: [
@@ -18,6 +19,7 @@ import { UtilsProvider } from './providers/utils'
         ProjectProvider,
         PackageProvider,
         UtilsProvider,
+        ShareProvider,
     ]
 })
 export class CreateApplication { }
