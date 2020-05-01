@@ -23,10 +23,11 @@ export class BannerProvider {
             ),
             this.fill(' '),
             this.fill(' '),
-            this.center(`Author ${chalk.greenBright('ikrong.com')}`, '*'),
-            this.fill(' '),
             this.center(`Welcome to share your favorite template here`, '*'),
             this.center(`${chalk.blueBright('https://github.com/ikrong/create-thing')}`, '*'),
+            this.fill(' '),
+            this.fill(' '),
+            this.center(`Author ${chalk.greenBright('ikrong.com')}`, '*'),
             this.fill(' '),
             this.fill('='),
         ]
