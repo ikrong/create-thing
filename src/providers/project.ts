@@ -24,14 +24,14 @@ export class ProjectProvider {
         // https://raw.staticdn.net/ikrong/starter/master/src/projects.json
         // https://raw.githubusercontent.com/ikrong/starter/master/src/projects.json
         // https://cdn.jsdelivr.net/gh/ikrong/starter@master/src/projects.json
-        return this.client.get(`https://cdn.jsdelivr.net/gh/ikrong/starter@${process.env.NODE_ENV == 'production' ? 'master' : 'dev'}/src/projects.json`)
+        return this.client.get(`https://ikrong.github.io/starter/projects.json`)
     }
 
     async download(proj: ProjectInfo): Promise<string> {
         await this.del()
         let file = `${this.tmpdir}archive.zip`
         let unzipdir = `${this.tmpdir}archive/`
-        let mainUrl = `https://github.com/ikrong/starter/archive/${process.env.NODE_ENV == 'production' ? 'master' : 'dev'}.zip`
+        let mainUrl = `https://github.com/ikrong/starter/archive/master.zip`
         let url = String(proj.type).toLowerCase() == 'github' ? proj.url : mainUrl
         await this.client.download(url, file)
         await this.fs.unzip(file, unzipdir)
