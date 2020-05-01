@@ -35,7 +35,7 @@
     "chalk": "^4.0.0",
     "cp-file": "^9.0.0",
     "execa": "^4.0.0",
-    "extract-zip": "^2.0.0",
+    "extract-zip": "1.x",
     "globby": "^11.0.0",
     "inquirer": "^7.1.0",
     "lodash": "^4.17.15",
