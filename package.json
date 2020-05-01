@@ -1,6 +1,6 @@
 {
   "name": "create-thing",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "Start a new thing and take a new adventure!",
   "main": "./dist/index.js",
   "homepage": "https://github.com/ikrong/create-thing",
