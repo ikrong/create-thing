@@ -7,6 +7,7 @@ import { ProjectProvider } from './providers/project'
 import { PackageProvider } from './providers/package'
 import { UtilsProvider } from './providers/utils'
 import { ShareProvider } from './providers/share'
+import { BannerProvider } from './providers/banner'
 
 @Poty({
     entries: [
@@ -20,9 +21,18 @@ import { ShareProvider } from './providers/share'
         PackageProvider,
         UtilsProvider,
         ShareProvider,
+        BannerProvider,
     ]
 })
-export class CreateApplication { }
+export class CreateApplication {
+
+    constructor(
+        private banner: BannerProvider,
+    ) {
+        this.banner.print()
+    }
+
+}
 
 Poty.run(CreateApplication);
 
