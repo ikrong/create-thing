@@ -60,7 +60,6 @@ export class AskProvider {
     /**加载动画 */
     loading() {
         let loading = ora()
-        loading.start()
         return loading
     }
 

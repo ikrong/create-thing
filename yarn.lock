@@ -44,23 +44,34 @@
     "@nodelib/fs.scandir" "2.1.3"
     fastq "^1.6.0"
 
-"@poty/commander@0.2.18":
-  version "0.2.18"
-  resolved "https://registry.npmjs.org/@poty/commander/-/commander-0.2.18.tgz#1428a2c81c78e3f7607c7b2d53b460ce3c747b89"
-  integrity sha512-0V203TF7r7UvfSqyce5zISe2NAU/p1o7JunkoMmNYJyrBYOOvtSxLVB9htqS+DJLVW5JG4Nz74CweObMGzYRkA==
+"@poty/commander@0.2.27":
+  version "0.2.27"
+  resolved "https://registry.npmjs.org/@poty/commander/-/commander-0.2.27.tgz#038c5f5b232f48a8437d9c2311ab39e0b6a284ab"
+  integrity sha512-1js2AThVb1FI8OM/n0YdmjnE+9bwKz0fk8iidVQMBgIbuFHY4d0kbnJ48OVlpUq8vJUTB89S4SQxdJ1V9YdYWQ==
   dependencies:
-    "@poty/core" "^0.2.18"
+    "@poty/core" "^0.2.27"
+    "@poty/log" "^0.2.27"
     cliui "^6.0.0"
     minimist-options "^4.0.2"
     reflect-metadata "^0.1.13"
     yargs-parser "^18.1.3"
 
-"@poty/core@0.2.18", "@poty/core@^0.2.18":
-  version "0.2.18"
-  resolved "https://registry.npmjs.org/@poty/core/-/core-0.2.18.tgz#036a16df7a65219e18586baf6e70abb40896b764"
-  integrity sha512-A04go9utrroj8Wk+WbVddePcDdTRl/7PwfaeOx0JZ6b5H3UnMi3bIGXIVBbHu7blq4Q4qbVEZ87gQ4J3FUUTQg==
+"@poty/core@0.2.27", "@poty/core@^0.2.27":
+  version "0.2.27"
+  resolved "https://registry.npmjs.org/@poty/core/-/core-0.2.27.tgz#1d72656c742ecae4a1c133b25b3007fcf2ee6e41"
+  integrity sha512-dghzcIfk/5WM4O1VXB1Z36KG1uvwq79i8yzXzPIhw2A2s9IMwTAH6HtSco0ArWHCImv0AzLqHNhV1Z7hHlKs0Q==
   dependencies:
+    "@poty/log" "^0.2.27"
     reflect-metadata "^0.1.13"
+
+"@poty/log@^0.2.27":
+  version "0.2.27"
+  resolved "https://registry.npmjs.org/@poty/log/-/log-0.2.27.tgz#e97ff895fe8d31841d08bfaa80db2e0f682374f1"
+  integrity sha512-XD78EIhWJGSOAI30tO+EKoW7+6Qp+SNfADOG1X0xx1XFkoFxUEjEt9L8i3jaE3OMsilbus1c6pqRkkqLDsjvzA==
+  dependencies:
+    chalk "^4.0.0"
+    cliui "^6.0.0"
+    rotating-file-stream "^2.0.2"
 
 "@rollup/plugin-commonjs@^11.1.0":
   version "11.1.0"
@@ -1095,6 +1106,11 @@ rollup@^2.7.2:
   integrity sha512-SdtTZVMMVSPe7SNv4exUyPXARe5v/p3TeeG3LRA5WabLPJt4Usi3wVrvVlyAUTG40JJmqS6zbIHt2vWTss2prw==
   optionalDependencies:
     fsevents "~2.1.2"
+
+rotating-file-stream@^2.0.2:
+  version "2.1.0"
+  resolved "https://registry.npmjs.org/rotating-file-stream/-/rotating-file-stream-2.1.0.tgz#0d2e4c298703a2148762ab9e0334e3c9118357fc"
+  integrity sha512-39fowcDgbaxnmmlYswSEnrNFW9n/yrLZa4b+UjNK9LDobs6zWMBsgIBeQnwGtqf6tkQCE1Nq6jRqCVw6F0y/lw==
 
 run-async@^2.4.0:
   version "2.4.0"

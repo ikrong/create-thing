@@ -1,10 +1,10 @@
 export interface ProjectInfo {
-    name: string;
+    name?: string;
     type: string;
     url: string;
-    lang: {
+    lang?: {
         zh: string;
         en: string;
     }
-    tags: string[]
+    tags?: string[]
 }

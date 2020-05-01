@@ -5,6 +5,7 @@ import { AskProvider } from '../providers/ask'
 import { FileProvider } from '../providers/fs'
 import chalk from 'chalk'
 import path from 'path'
+import URL from 'url'
 
 @CMD()
 export class DefaultCMD {
@@ -28,6 +29,24 @@ export class DefaultCMD {
         } else {
             console.log(chalk.redBright('需要node版本号10.X以上'))
         }
+    }
+
+    @Subcmd('*')
+    @Description('')
+    async clone(data: any, [url]: string[]) {
+        // https://github.com/ikrong/starter
+        // https://github.com/ikrong/starter/archive/master.zip
+        let downloadUrl = ''
+        if (url.slice(-4) == '.zip') {
+            downloadUrl = url
+        } else {
+            if (url.slice(-1) != '/') url += '/'
+            downloadUrl = URL.resolve(url, 'archive/master.zip')
+        }
+        this.project.pullProject({
+            url: downloadUrl,
+            type: 'github'
+        })
     }
 
     @Subcmd('gen-config')

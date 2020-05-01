@@ -70,54 +70,64 @@ export class ProjectProvider {
 
     async start() {
         let loading = this.ask.loading()
-        this.projects = await this.getConfig()
         try {
-            if (this.projects.length <= 6) {
-                loading.stop()
-                let locale = await osLocale()
-                let isZh = locale.match(/^zh-/) ? true : false
-                let choice = await this.ask.choose('选择项目模板:', this.projects.filter(item => {
-                    if (this.share.repository) {
-                        return String(item.type).toLowerCase() == 'github'
-                    } else return true
-                }).map(item => {
-                    return {
-                        name: item.name,
-                        desc: isZh ? item.lang.zh : item.lang.en,
-                        extras: item
-                    }
-                }))
-                loading.start('获取项目中')
-                let dir = await this.download(choice.extras)
-                loading.stop()
-
-                // 用户确认工作目录
-                let workdir = process.cwd()
-                let isCWD = await this.ask.confirm(`需要将项目创建在当前目录下吗 ${chalk.green(workdir)}`)
-                if (!isCWD) {
-                    workdir = await this.ask.input('请输入您需要创建项目的路径(绝对路径)', dir => path.isAbsolute(dir))
+            loading.start('正在获取项目信息')
+            this.projects = await this.getConfig()
+            loading.stop()
+            let locale = await osLocale()
+            let isZh = locale.match(/^zh-/) ? true : false
+            let choice = await this.ask.choose('选择项目模板:', this.projects.filter(item => {
+                if (this.share.repository) {
+                    return String(item.type).toLowerCase() == 'github'
+                } else return true
+            }).map(item => {
+                return {
+                    name: item.name,
+                    desc: isZh ? item.lang.zh : item.lang.en,
+                    extras: item
                 }
+            }))
 
-                // 将模板复制到工作目录中
-                loading.start('复制文件中')
-                await this.fs.mkdir(workdir)
-                await this.fs.copy([
-                    path.join(dir, `/**/*`),
-                    path.join(dir, `/**/.*`),
-                    path.join(dir, `/**/.*/*`),
-                    path.join(dir, `/**/.*/.*`),
-                ], workdir, dir)
-                loading.stop()
-
-                // 提示修改package.json
-                console.log(`${chalk.green('接下来配置一下package.json')}`)
-                await this.pkg.modify(path.join(workdir, 'package.json'))
-
-                loading.stop()
-            }
+            this.pullProject(choice.extras)
         } catch (error) {
             loading.stop()
             console.log(error)
+        }
+    }
+
+    async pullProject(proj: ProjectInfo) {
+        let loading = this.ask.loading()
+        try {
+            loading.start('获取项目中')
+            let dir = await this.download(proj)
+            loading.stop()
+
+            // 用户确认工作目录
+            let workdir = process.cwd()
+            let isCWD = await this.ask.confirm(`需要将项目创建在当前目录下吗 ${chalk.green(workdir)}`)
+            if (!isCWD) {
+                workdir = await this.ask.input('请输入您需要创建项目的路径(绝对路径)', dir => path.isAbsolute(dir))
+            }
+
+            // 将模板复制到工作目录中
+            loading.start('复制文件中')
+            await this.fs.mkdir(workdir)
+            await this.fs.copy([
+                path.join(dir, `/**/*`),
+                path.join(dir, `/**/.*`),
+                path.join(dir, `/**/.*/*`),
+                path.join(dir, `/**/.*/.*`),
+            ], workdir, dir)
+            loading.stop()
+
+            // 提示修改package.json
+            console.log(`${chalk.green('接下来配置一下package.json,如果不需要配置可退出控制台')}`)
+            await this.pkg.modify(path.join(workdir, 'package.json'))
+
+            loading.stop()
+        } catch (error) {
+            console.log(error)
+            loading.stop()
         }
     }
 
