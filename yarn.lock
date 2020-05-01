@@ -44,21 +44,21 @@
     "@nodelib/fs.scandir" "2.1.3"
     fastq "^1.6.0"
 
-"@poty/commander@0.2.16":
-  version "0.2.16"
-  resolved "https://registry.npmjs.org/@poty/commander/-/commander-0.2.16.tgz#7cd7b16067f87aa13db14e5712fea71426828861"
-  integrity sha512-/d4GUFo6UTScrcvvbg3xgUkqDyjeBRMsoUhzfDDEDomIqbqZRFSnG+iX3T44UjNEtjiGcEXWH+0QawkO6UdtHw==
+"@poty/commander@0.2.18":
+  version "0.2.18"
+  resolved "https://registry.npmjs.org/@poty/commander/-/commander-0.2.18.tgz#1428a2c81c78e3f7607c7b2d53b460ce3c747b89"
+  integrity sha512-0V203TF7r7UvfSqyce5zISe2NAU/p1o7JunkoMmNYJyrBYOOvtSxLVB9htqS+DJLVW5JG4Nz74CweObMGzYRkA==
   dependencies:
-    "@poty/core" "^0.2.16"
+    "@poty/core" "^0.2.18"
     cliui "^6.0.0"
     minimist-options "^4.0.2"
     reflect-metadata "^0.1.13"
     yargs-parser "^18.1.3"
 
-"@poty/core@0.2.16", "@poty/core@^0.2.16":
-  version "0.2.16"
-  resolved "https://registry.npmjs.org/@poty/core/-/core-0.2.16.tgz#e40837a01dabea91203c189060e36b7b439c9b81"
-  integrity sha512-tjgADmO5coaIYzpqLk3ILv8obFTVyfTMKLO5CiiZ+IZnUQ2Nk6VyEA+FAdl2lAhsgN6NahDl1D/+6WPB9NzJfQ==
+"@poty/core@0.2.18", "@poty/core@^0.2.18":
+  version "0.2.18"
+  resolved "https://registry.npmjs.org/@poty/core/-/core-0.2.18.tgz#036a16df7a65219e18586baf6e70abb40896b764"
+  integrity sha512-A04go9utrroj8Wk+WbVddePcDdTRl/7PwfaeOx0JZ6b5H3UnMi3bIGXIVBbHu7blq4Q4qbVEZ87gQ4J3FUUTQg==
   dependencies:
     reflect-metadata "^0.1.13"
 
