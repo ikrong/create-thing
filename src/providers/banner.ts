@@ -1,10 +1,10 @@
 import { Provider } from '@poty/core'
 import chalk from 'chalk'
 import stringWidth from 'string-width'
+import wrap from 'wrap-ansi'
 
 @Provider()
 export class BannerProvider {
-
 
     print() {
         let banner = [
@@ -45,10 +45,8 @@ export class BannerProvider {
         if (fill <= 0) {
             let line = Math.ceil(textLen / (max - (2 + (borderLen * 4))))
             let lineNum = Math.round(textLen / line)
-            let lineText = []
-            for (let i = 0; i < line; i++) {
-                lineText.push(this.center(text.substr(i * lineNum, lineNum), border))
-            }
+            let lineText = wrap(text, lineNum, { hard: true }).split('\n')
+            lineText = lineText.map((item: string) => this.center(item, border))
             return lineText.join('\n')
         }
         let left = Math.floor(fill / 2)
