@@ -29,6 +29,7 @@
         "**/*.spec.ts",
         "dist",
         "**/test",
-        "**/dist"
+        "**/dist",
+        "packages"
     ]
 }
