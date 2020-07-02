@@ -66,6 +66,12 @@ export class PackageProvider {
                 url: data.bugs || ''
             }
         }, pkg)
+        if (!pkg?.bugs?.url) {
+            delete pkg.bugs
+        }
+        if (!pkg?.repository?.url) {
+            delete pkg.repository
+        }
         return this.fs.saveText(dir, JSON.stringify(pkg, null, 4))
     }
 
